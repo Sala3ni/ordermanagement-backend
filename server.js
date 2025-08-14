@@ -8,7 +8,7 @@ const app = express();
 
 // Configure CORS
 app.use(cors({
-  origin: process.env.FRONTEND_URL,
+  origin: process.env.FRONTEND_URL || "*",
   credentials: true
 }));
 
@@ -34,6 +34,11 @@ mongoose.connect(process.env.MONGODB_URI, {
  *        API Routes
  * =========================
  */
+
+// Health check route for Vercel root path
+app.get("/", (req, res) => {
+  res.send("Backend is running 🚀");
+});
 
 // CREATE order
 app.post("/orders", async (req, res) => {
@@ -161,4 +166,6 @@ app.delete("/orders/:id", async (req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+module.exports = app; // Required for Vercel
