@@ -44,6 +44,11 @@ mongoose.connect(process.env.MONGODB_URI, {
 
 // ===== Routes =====
 
+// Root route
+app.get("/", (req, res) => {
+  res.json({ message: "Order Management API is running" });
+});
+
 // GET orders with filter & pagination
 app.get("/orders", async (req, res) => {
   try {
